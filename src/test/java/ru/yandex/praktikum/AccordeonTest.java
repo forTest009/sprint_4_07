@@ -11,6 +11,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import static org.junit.Assert.assertEquals;
+
 @RunWith(Parameterized.class)
 
 public class AccordeonTest {
@@ -48,8 +51,10 @@ public class AccordeonTest {
         MainPage objMainPage = new MainPage(driver);
         objMainPage.open();
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(By.xpath("//div[starts-with(@class,'accordion__item')]")));
-        objMainPage.question(textHeader);
-        objMainPage.answer(textBody);
+        String actual = objMainPage.getQuestion(textHeader);
+        assertEquals("Текст в заголовке аккордеона не совпадает с ожидаемым", actual, textHeader);
+        objMainPage.clickQuestion(textHeader);
+        assertEquals("Текст в теле аккордеона не совпадает с ожидаемым", objMainPage.getAnswer(textBody), textBody);
     }
     @After
     public void teardown(){

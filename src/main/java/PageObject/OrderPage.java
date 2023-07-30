@@ -40,12 +40,15 @@ public class OrderPage {
     //Модальное окно подтверждения заказа
     //Кнопка подтвержения заказа
     private By btnOrderAgree = By.xpath("//div[starts-with(@class,'Order_Modal')]//button[text()='Да']");
-    //Кнопка отмены заказа
 
+    //Кнопка отмены заказа
     private By btnOrderCancel = By.xpath("//div[starts-with(@class,'Order_Modal')]//button[text()='Нет']");
 
     //Модальное окно оформленного заказа
+    //Кнопка для перехода на страницу статуса заказа
     private By btnCheckStatus= By.xpath("//div[starts-with(@class,'Order')]//button[text()='Посмотреть статус']");
+    //Текст с номером заказа
+    private By textWithOrderNumber= By.xpath("//div[starts-with(@class,'Order_Text')]");
 
     public OrderPage(WebDriver driver){
         this.driver = driver;
@@ -100,6 +103,10 @@ public class OrderPage {
         driver.findElement(valueColorGrey).click();
     }
 
+    public String getTextWithNumberOrder(){
+        return driver.findElement(textWithOrderNumber).getText();
+    }
+
     public void clickBtnCheckStatus(){
         driver.findElement(btnCheckStatus).click();
     }
@@ -118,6 +125,5 @@ public class OrderPage {
         setComments(comments);
         clickBtnNextSecondStep();
         clickBtnAgree();
-        clickBtnCheckStatus();
     }
 }
