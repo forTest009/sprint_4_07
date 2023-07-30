@@ -11,6 +11,9 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import static org.junit.Assert.assertEquals;
+
+
 @RunWith(Parameterized.class)
 
 public class OrderTest {
@@ -57,6 +60,7 @@ public class OrderTest {
         OrderPage objOrderPage = new OrderPage(driver);
         objOrderPage.fillFirstStep(nameUser, surnameUser, addressUser, telUser);
         objOrderPage.fillSecondStep(dateOrder, commentsUser);
+        assertEquals("Сформирован и выведен номер заказа", true, objOrderPage.getTextWithNumberOrder().matches("\\d+"));
     }
     @Test
     public void newCheckActivityOrderInHeader() {
@@ -67,6 +71,7 @@ public class OrderTest {
         OrderPage objOrderPage = new OrderPage(driver);
         objOrderPage.fillFirstStep(nameUser, surnameUser, addressUser, telUser);
         objOrderPage.fillSecondStep(dateOrder, commentsUser);
+        assertEquals("Сформирован и выведен номер заказа", true, objOrderPage.getTextWithNumberOrder().matches("\\d+"));
     }
     @After
     public void teardown(){

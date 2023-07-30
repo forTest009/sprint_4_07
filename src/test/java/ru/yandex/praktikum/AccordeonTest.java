@@ -11,6 +11,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import static org.junit.Assert.assertEquals;
+
 @RunWith(Parameterized.class)
 
 public class AccordeonTest {
@@ -26,8 +29,7 @@ public class AccordeonTest {
     public static Object[][] getTestData() {
         return new Object[][]{
                 {"Сколько это стоит? И как оплатить?", "Сутки — 400 рублей. Оплата курьеру — наличными или картой."},
-                {"Хочу сразу несколько самокатов! Так можно?",
-                        "Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим."},
+                {"Хочу сразу несколько самокатов! Так можно?", "Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим."},
                 {"Как рассчитывается время аренды?", "Допустим, вы оформляете заказ на 8 мая. Мы привозим самокат 8 мая в течение дня. Отсчёт времени аренды начинается с момента, когда вы оплатите заказ курьеру. Если мы привезли самокат 8 мая в 20:30, суточная аренда закончится 9 мая в 20:30."},
                 {"Можно ли заказать самокат прямо на сегодня?", "Только начиная с завтрашнего дня. Но скоро станем расторопнее."},
                 {"Можно ли продлить заказ или вернуть самокат раньше?","Пока что нет! Но если что-то срочное — всегда можно позвонить в поддержку по красивому номеру 1010."},
@@ -49,8 +51,10 @@ public class AccordeonTest {
         MainPage objMainPage = new MainPage(driver);
         objMainPage.open();
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", driver.findElement(By.xpath("//div[starts-with(@class,'accordion__item')]")));
-        objMainPage.question(textHeader);
-        objMainPage.answer(textBody);
+        String actual = objMainPage.getQuestion(textHeader);
+        assertEquals("Текст в заголовке аккордеона не совпадает с ожидаемым", actual, textHeader);
+        objMainPage.clickQuestion(textHeader);
+        assertEquals("Текст в теле аккордеона не совпадает с ожидаемым", objMainPage.getAnswer(textBody), textBody);
     }
     @After
     public void teardown(){

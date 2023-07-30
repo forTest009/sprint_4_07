@@ -18,11 +18,14 @@ public class MainPage {
     public void open(){
         driver.get(url);
     }
-    public void question(String textHeader){
+    public void clickQuestion(String textHeader){
         driver.findElement(By.xpath("//*[text()='" + textHeader + "']")).click();
     }
-    public void answer(String textBody){
-        driver.findElement(By.xpath("//*[text()='" + textBody + "']")).getText();
+    public String getQuestion(String textHeader){
+        return driver.findElement(By.xpath("//*[text()='" + textHeader + "']")).getText();
+    }
+    public String getAnswer(String textBody){
+        return driver.findElement(By.xpath("//*[text()='" + textBody + "']")).getText();
     }
     public void clickBtnInHeader() {
         driver.findElement(btnOrderInHeader).click();
